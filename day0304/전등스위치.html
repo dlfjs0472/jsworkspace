@@ -32,22 +32,27 @@
 <script>
     var op=0.8;
     var flag = true; //true or false 값을 대입할 변수 선언
-    var button= true;
+    var button= "off";
+
     //스위치를 켜고 끄는 함수
     function turn(){
         //투명막을 제어 : 문서내의 surface라 불리는 요소중 스타일 중 opacity 값을 불투명0(켜기), 0.8(끄기)
         op=(flag)? 0 : 0.8;
         document.querySelector("#surpace").style.opacity=op;
+        
+        //스위치 이미지도 제어  
+        button=(flag)? "on":"off"
+        console.log(button);
+        document.querySelector("img").src = "/images/switch_"+button+".png"
         flag=!flag; //기존값을 뒤집자!! 뒤집으려면 논리값이 최고!!
-        //스위치 이미지도 제어
-        documant.querySelector
+
     }
 </script>
 </head>
 <body>
     <div id="wrapper">
         <div id ="surpace"></div>
-        <img src="/images/switch_off.png" alt="" onclick="turn()">
+        <img src="../images/switch_off.png" alt="" onclick="turn()">
     </div>
 </body>
 </html>
