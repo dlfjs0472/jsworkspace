@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<script>
+//두수 3,4의 합을 구하는 함수
+function sum(x, y){
+    var result = x+y;
+    return result; //호출자에게 결과를 반환
+}
+var n = sum(3,4);
+document.write(n);
+
+function getMsg(msg){
+    document.write("자바");
+    return;
+    document.write("자바");
+}
+getMsg("하이");
+//결과 "자바"
+//실행부가 22번 getMsg("하이");를 읽고 17번으로 가 getMsg(msg) 중 msg에 하이를 대입
+//그리고 18번으로 내려가 자바를 입력 후 19번에 리턴값을 만나서 입력된 자바를 가지고 호출자에게 리턴
+//20번은 영원히 읽히지 않음.
+
+
+
+</script>
+</head>
+<body>
+</body>
+</html>
