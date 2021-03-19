@@ -53,6 +53,7 @@ var t_id, t_name, t_phone, t_money;
 var t_id2, t_name2, t_phone2, t_money2;
 
 
+
 var memberArray=[];//지금은 일차원이지만, 곧 등록시 2차원이 될예정
                                 //2차원배열은 표이고,동시에 데이터베이스로 간주해도 좋다
                                 //단,메모리상에서만..
@@ -100,7 +101,7 @@ function getList(){
 
     //db에 있는 데이터를 이용하여 현재까지 누적된 정보를 출력하기!!
     for(var i=memberArray.length-1; i>=0; i--){//층수만큼 반복
-        tag+="<tr onClick=info()>"
+        tag+="<tr onclick=info("+i+")>"
         tag+="<td>"+(i+1)+"</td>"//얘는 배열에 넣은적이 없으므로,반복문에서 처리불가
         for(var a=0; a<memberArray[i].length; a++){
             tag+="<td>"+memberArray[i][a]+"</td>"           
@@ -123,7 +124,8 @@ function getList(){
     listArea.innerHTML=tag;
 }
 
-function info(){
+function info(i){
+    
     t_id2.value=memberArray[i][0]
     t_name2.value=memberArray[i][1]
     t_phone2.value=memberArray[i][2]
