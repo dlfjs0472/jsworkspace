@@ -55,9 +55,8 @@ input::placeholder{
 <script src="../js/font.js"></script>
 <script>
 var listArea; //테이블이 출력될 div영역
-var t_id, t_name, t_phone, t_money;
+var t_id, t_name, t_phone, t_money, t_search, search_type;
 var t_id2, t_name2, t_phone2, t_money2;
-var info=0;
 
 
 
@@ -92,7 +91,6 @@ function regist(){
 
     getList();//등록된 데이터를 표로 보여주기 위해 즉, 시각화 시키기 위해 getList()호출
 }
-
 //데이터를 테이블로 출력하기
 function getList(){
     var tag="<table width=\"100%\" border=\"1\">"
@@ -132,37 +130,22 @@ function getList(){
     listArea.innerHTML=tag;
 }
 
-//수정,삭제 화면에 넘기는 함수
 function info(i){
-    
+    t_No.value=i
     t_id2.value=memberArray[i][0]
     t_name2.value=memberArray[i][1]
     t_phone2.value=memberArray[i][2]
     t_money2.value=memberArray[i][3]
-
 }
-value.edit=i;
 
-function t_edit(i){
-    var ans=confirm("데이터 수정하시겠습니까?")
-    var edit_id=t_id2.value;
-    var edit_name=t_name2.value;
-    var edit_phone=t_phone2.value;
-    var edit_money=t_money2.value;
+function t_edit(){
+    var i = t_No.value;
+    memberArray[i][0]=t_id2.value
+    memberArray[i][1]=t_name2.value
+    memberArray[i][2]=t_phone2.value
+    memberArray[i][3]=t_money2.value
 
-    if(ans){
-        memberArray[value.edit][0]=edit_id
-        memberArray[value.edit][1]=edit_name
-        memberArray[value.edit][2]=edit_phone
-        memberArray[value.edit][3]=edit_money
-
-        getList();
-    }else{
-
-    }
-
-
-
+   getList();
 }
 
 function init(){
@@ -172,6 +155,8 @@ function init(){
     t_name = document.getElementById("t_name");
     t_phone = document.getElementById("t_phone");
     t_money = document.getElementById("t_money");
+    t_search  = document.getElementById("search");
+    search_type  = document.getElementById("type");
 
     //상세보기용 텍스트 필드
     t_id2 = document.getElementById("t_id2");
@@ -179,9 +164,62 @@ function init(){
     t_phone2 = document.getElementById("t_phone2");
     t_money2 = document.getElementById("t_money2");
     
-
     getList();
 }
+
+function t_delete(){
+    memberArray.splice(t_No.value, 1);
+
+   getList();
+}
+
+function search(){
+    var type=document.getElementById("type");
+    type= type.options[type.selectedIndex].value;
+
+    if(t_search.value==""){
+	    getList();
+        }else{
+        var tag="<table width=\"100%\" border=\"1\">"
+        tag+="<tr style=\"background:green\">"
+        tag+="<td>NO</td>"
+        tag+="<td>ID</td>"
+        tag+="<td>Name</td>"
+        tag+="<td>Phone</td>"
+        tag+="<td>Money</td>"
+        tag+="</tr>"
+
+        var sum=0;
+        var info;
+
+        for( var i = 0; i<memberArray.length; i++){
+        if(memberArray[i][type].indexOf(t_search.value)!=-1){
+            tag+="<tr onclick=info("+i+")>"
+            tag+="<td>"+(i+1)+"</td>"//얘는 배열에 넣은적이 없으므로,반복문에서 처리불가
+            for(var a=0; a<memberArray[i].length; a++){
+                tag+="<td>"+memberArray[i][a]+"</td>"           
+            }
+            //호수가 3인 데이터는 money 이므로, 이 money를 sum 변수에 누적시키자
+            sum+=parseInt(memberArray[i][3]);//돈은 누적하는 횟수는 층과 관련되어있기때문에
+                                                                    //그렇기 때문에 바깥쪽 포문에서 처리했다
+
+            tag+="</tr>"
+        }
+        }
+
+        tag+="<tr>"
+        tag+="<td colspan='5' align='right'>가입 회원 수:"+memberArray.length+"명, 누적자산: "+sum+"원</td>"
+        tag+="</tr>"
+        tag+="</table>"
+
+
+
+        //document.write()와 비슷하기는 하지만, document.write()는
+        //문서 전체에 지정한 문자열을 출력한다..
+        listArea.innerHTML=tag;
+	}
+}
+
 window.addEventListener("load", function(){
     init();
 });
@@ -200,13 +238,13 @@ window.addEventListener("load", function(){
 
         <div id="list-wrapper">
             <div id="search-area">
-                <select>
+                <select id="type">
                     <option value="">--선택하세요--</option>
-                    <option value="">ID로 검색</option>
-                    <option value="">이름으로 검색</option>
+                    <option value="0" >ID로 검색</option>
+                    <option value="1" >이름으로 검색</option>
                 </select>
-                <input type="text"placeholder="검색어 입력">
-                <button style='font-size:18px'>
+                <input type="text"placeholder="검색어 입력" id="search">
+                <button style='font-size:18px' onclick="search()">
                     Search<i class='fas fa-search'></i>
                 </button>
             </div>
@@ -214,12 +252,13 @@ window.addEventListener("load", function(){
             </div>
         </div>
         <div id="detail-area">
+            <input type="hidden" id="t_No">
             <input type="text" id="t_id2" placeholder="ID 입력">
             <input type="text" id="t_name2"placeholder="이름 입력">
             <input type="text" id="t_phone2"placeholder="연락처 입력">
             <input type="text" id="t_money2"placeholder="현금자산 입력">
-            <button onclick="t_edit()" style="cursor: pointer;">수정</button>
-            <button onclick="t_delete()" style="cursor: pointer;">삭제</button>
+            <button onclick="t_edit()" style="cursor: pointer;" id="">수정</button>
+            <button onclick="t_delete()" style="cursor: pointer;" id="">삭제</button>
         </div>
     </div>
 </body>
