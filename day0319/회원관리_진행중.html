@@ -141,29 +141,8 @@ function info(i){
     t_money2.value=memberArray[i][3]
 
 }
-value.edit=i;
-
-function t_edit(i){
-    var ans=confirm("데이터 수정하시겠습니까?")
-    var edit_id=t_id2.value;
-    var edit_name=t_name2.value;
-    var edit_phone=t_phone2.value;
-    var edit_money=t_money2.value;
-
-    if(ans){
-        memberArray[value.edit][0]=edit_id
-        memberArray[value.edit][1]=edit_name
-        memberArray[value.edit][2]=edit_phone
-        memberArray[value.edit][3]=edit_money
-
-        getList();
-    }else{
-
-    }
 
 
-
-}
 
 function init(){
     listArea=document.getElementById("list-area");
