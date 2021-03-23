@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<script>
+/* javascript 자체에서도 내장된 여러 객체를 지위하는데, 이러한 객체들을
+가리켜 자바 스크립트 내장 객체라 한다.
+이 예제에서는 String 객체에 대해 알아본다!!
+*/
+// var str=new Sting("korea"); //흔치않다..
+
+var s= "korea" //얘가 메모리 효율성이 높다!!
+
+/*
+가장 흔하면서도 일반적인 문자열 처리는 아래방법이 많이 쓰인다..
+왜? 문자열은 인간이 가장 자주 사용하는 데이터형이다!! 따라서 일반 자료형 처럼 선언
+할수있다... 하지만, 그 본질은 객체다!! 결론 객체지만, new하지 않고도 메모리 올릴 수 있다
+객체라면 자체적으로 변수(속성=property) 또는 함수(메서드 method)를 가질수 있다
+세탁기에 대한 사용법은, 세탁기 설명서를 봐야 하듯.
+해당 언어가 어떤 기능을 가지고 있는지를 알려면, 개발문서를 봐야한다
+이때 개발문서를 api document
+*/
+var ch=s.charAt(2); //인덱스 번째 '문자' 하나를 반환
+
+/*
+for(var i =0; i<s.length; i++){
+    console.log(s.charAt(i));
+}
+*/
+
+//substring() 문자열내에서 일부 문자열을 추출할 수 있는 메서드
+var fruit = "pine apple";
+//형식 fruit.substring(인덱스,몇번째);
+var sub=fruit.substring(0,4);
+console.log(sub)// pine
+
+var sub2 = fruit.substring(5, 10)
+console.log(sub2)// apple
+
+</script>
+</head>
+<body>
+
+</body>
+</html>
