@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<style>
+    body{
+        background: #000000;
+        text-align: center;
+    }    
+    #img_container{
+        height: 100px;
+        position:relative;
+        text-align: center;
+    }
+    #img_container img{
+        width: 150px;
+        display:block;
+        margin-left:auto;
+        margin-right:auto;
+        text-align: center;
+    }
+    #wrapper{
+        width:700px;
+        height:500px;
+        border:5px solid yellow;
+        margin: auto;
+        text-align: center;
+
+    } 
+    #wrapper h1{
+        text-align:center;
+        color:#FFFFFF;
+        font-weight: bold;
+        font-size:70px;
+ 
+    }
+    #container{
+        height: 120px;
+    }
+    #container p{
+        text-align: center;
+        color:darkturquoise;
+        font-weight: bold;
+        font-size:35px;
+        display: none; /*보이는 건 block*/
+    }
+    #wrapper button{
+        padding:10px;
+    }
+    </style>    
+<script>
+var flag=true;
+var imgArray=["intro1.png","intro1.png"]
+
+function init(){
+    document.querySelector("button").addEventListener("click", function(){
+    //메인페이지로 링크!!
+    //a 태그를자바스크립트로 표현한 것이 location.href
+    location.href="횡슈팅게임.html";
+    pika();
+    });
+}
+function pika(i){
+    var img=document.createElement("img");
+    img.src="../images/shooting/intro"+i+".png"
+    img.style.width=100+"px";
+    img.style.height=100+"px";
+    img.style.position="relative";
+    img_container.appendChild(img);
+}
+//깜빡거리는 효과
+function blink(){
+    var vision=(flag)? "none":"block" 
+    document.querySelector("p").style.display=vision;
+    flag=!flag;
+}
+//이미지 교체 효과
+function img_change(){
+    var pika=(flag)? "1": "2"
+    document.querySelector("img").style.display=vision;
+    flag=!flag;
+}
+window.addEventListener("load", function(){
+    init();
+    setInterval("blink()",500);
+    setInterval("img_change()",500);
+});
+</script>
+</head>
+<body>
+    <div id = "wrapper">
+        <div id="img_container">
+            <img src="../images/shooting/intro1.png" alt="">
+        </div>
+        <h1>Pokémon War</h1>
+        <div id="container">
+            <p>INSERT COIN</p>
+        </div>
+        <button>GAME START</button>
+    </div>
+</body>
+</html>
