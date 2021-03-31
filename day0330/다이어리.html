@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>다이어리</title>
+<style>
+#navi{
+    width: 100%;
+    height: 100px;
+    text-align: center;
+    position: relative;
+} 
+#navi span{
+    font-size: 40px;
+}
+#bt_prev, #bt_next{
+    width: 60px;
+    height: 35px;
+    background: rgb(75, 77, 71);
+    color: white;
+    border: 0px;
+    font-size: 15px;
+}
+#bt_next{
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+#bt_prev{
+    position: absolute;
+    left: 20px;
+    top: 20px;
+}
+#day_area{
+    height: 100px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 100px;
+    
+}
+#date_area{
+    height: 600px;
+}
+</style>
+<script src="../js/DateBox.js"></script>
+<script src="../js/lib.js"></script>
+<script>
+var cellSize=100; //가로*세로 100인 사각형
+var wrapper;
+var dayArray=["Sun","Mon","Tus","Wed","Thur","Fri","Sat"]
+var last;
+
+
+function init(){
+    wrapper=document.getElementById("wrapper"); //document 객체의 createElement() 메서드
+    createWrapper();
+    createDays(); //요일 박스 생성
+    createDate(); //날짜 박스 생성
+    getCurrentDate();//달력제목오늘 날짜를 기본적으로 출력하자
+}
+
+function createWrapper(){
+    wrapper.style.width=cellSize*7+"px";
+    wrapper.style.height=100+100+cellSize*6+"px";
+    wrapper.style.background="#cccccc"
+    wrapper.style.margin="auto"
+    wrapper.style.overflow="hidden"
+}
+
+//현재 날짜 구해오기
+function getCurrentDate(){
+    var d=new Date();
+    var yy=d.getFullYear(); //오늘의 연도
+    var mm=d.getMonth(); //오늘의 월 출력
+    //출력할때는 언제나 월에 1을 더하자
+    setTitle(yy+"년"+getZeroString(mm+1)+"월")//날짜 제목 출력!!
+}
+
+//각 월의 시작 요일을 알아야, 날짜의 시작 위치를 결정짓는다!!
+function getFirstDayOfMonth(year, month){
+    //원리 : 각 월의 1일로 날짜를 조작한 후, 해당요일을 물어보자!!
+    var d= new Date(year,month,1);//넘겨받은 매개변수로 날짜를 조작함
+    return d.getDay(); //요일반환!!
+}
+
+//각 월이 몇일까지 있는지(5월 : 31일 ,6월:30일 .. 구하기)
+//주의 : 함수 호출시 7월말이 궁금할 경우, 매개변수로는 8월
+function getLastDate(year,month){
+    last=new Date(year, month, 0);
+    return last.getDate(); //말일 날짜반환
+}
+
+
+//일,월,화... 박스생성
+function createDays(){
+    for(var i=0; i<dayArray.length; i++){
+        //constructor(container,width,height, text,bg)
+        var box= new DateBox(document.getElementById("day_area"), cellSize, cellSize,dayArray[i],"rgb(55, 168, 115)");
+    }
+}
+//날짜박스 생성
+function createDate(){
+    var d=new Date();
+    var yy=d.getFullYear(); //오늘의 연도
+    var mm=d.getMonth(); //오늘의 월 출력
+    for(var i=1; i<=getLastDate(yy,mm+1); i++){
+        //constructor(container,width,height, text,bg)
+        var dateBox= new DateBox(document.getElementById("date_area"), cellSize, cellSize, i ,"rgb(147, 150, 137)");
+    }
+}
+
+//달력의 날짜는 변경이 자주 일어나므로,함수로 정의해 놓겠다!!
+function setTitle(text){
+    document.getElementById("cal_title").innerText=text;
+}
+
+window.addEventListener("load", function(){
+    init();
+})
+</script>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="navi">
+             <button id="bt_prev">뒤로</button>
+             <span id="cal_title"></span>
+             <button id="bt_next">앞으로</button>
+        </div>
+        <div id="day_area"></div>
+        <div id="date_area"></div>
+    </div>
+</body>
+</html>
